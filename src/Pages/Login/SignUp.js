@@ -36,7 +36,7 @@ const SignUp = () => {
         console.log(guser || user);
     }
     return (
-        <div className='flex h-screen justify-center items-center'>
+        <div className='flex  justify-center items-center'>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
                     <h2 className="text-center text-2xl font-bold">Sign UP</h2>
@@ -114,7 +114,7 @@ const SignUp = () => {
                         {signInError}
                         <input className='btn w-full mx-w-xs text-white' type="submit" value="SIGN UP" />
                     </form>
-                    <small>Already have an account <Link to="/signup" className='text-primary'>Please Login?</Link></small>
+                    <small>Already have an account <Link to="/login" className='text-primary'>Please Login?</Link></small>
                     <div className="divider">OR</div>
                     <button
                         onClick={() => signInWithGoogle()}
