@@ -14,7 +14,7 @@ const Navber = () => {
         <>
             <li><Link to="/home">Home</Link></li>
             <li><Link to="/appointment">Appointment</Link></li>
-            <li><Link to="/reviews">Reviews</Link></li>
+            {/* <li><Link to="/reviews">Reviews</Link></li> */}
             <li><Link to="/contact">Contact Us</Link></li>
             <li><Link to="/about">About</Link></li>
             {
@@ -35,8 +35,8 @@ const Navber = () => {
                 </div>
                 <a className="btn btn-ghost normal-case text-xl">Doctors Portal</a>
             </div>
-            <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal p-0">
+            <div className="navbar-center hidden lg:flex ">
+                <ul className="menu menu-horizontal p-0 ">
                     {menuItems}
                 </ul>
             </div>
