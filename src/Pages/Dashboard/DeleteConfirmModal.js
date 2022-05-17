@@ -1,7 +1,7 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 
-const DeleteConfirmModal = ({ deletingDoctor, refetch }) => {
+const DeleteConfirmModal = ({ deletingDoctor, refetch, setDeletingDoctor }) => {
     const { name, email } = deletingDoctor;
     const handleDelete = () => {
         fetch(`http://localhost:5000/doctor/${email}`, {
@@ -15,6 +15,7 @@ const DeleteConfirmModal = ({ deletingDoctor, refetch }) => {
                 console.log(data);
                 if (data.deletedCount) {
                     toast.success(`Doctor${name} is delete`)
+                    setDeletingDoctor(null)
                     refetch()
                 }
             })
