@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 const DeleteConfirmModal = ({ deletingDoctor, refetch, setDeletingDoctor }) => {
     const { name, email } = deletingDoctor;
     const handleDelete = () => {
-        fetch(`http://localhost:5000/doctor/${email}`, {
+        fetch(`https://polar-anchorage-20509.herokuapp.com/doctor/${email}`, {
             method: 'DELETE',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -29,7 +29,7 @@ const DeleteConfirmModal = ({ deletingDoctor, refetch, setDeletingDoctor }) => {
                     <p class="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
                     <div class="modal-action">
                         <button onClick={() => handleDelete()} class="btn btn-xs btn-error">Delete</button>
-                        <label for="delete-confirm-modal" class="btn btn-xs btn-error">Cancel</label>
+                        <label for="delete-confirm-modal" class="btn btn-xs">Cancel</label>
                     </div>
                 </div>
             </div>
