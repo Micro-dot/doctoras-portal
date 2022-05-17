@@ -9,12 +9,12 @@ const AvailableAppointments = ({ date }) => {
     const [treatment, setTreatment] = useState(null);
     const formattedDate = format(date, 'PP')
     // useEffect(() => {
-    //     fetch(`http://localhost:5000/available?date=${formattedDate}`)
+    //     fetch(`https://polar-anchorage-20509.herokuapp.com/available?date=${formattedDate}`)
     //         .then(res => res.json())
     //         .then(data => setServices(data));
     // }, [formattedDate])
     const { data: services, isLoading, refetch } = useQuery(['available', formattedDate], () =>
-        fetch(`http://localhost:5000/available?date=${formattedDate}`)
+        fetch(`https://polar-anchorage-20509.herokuapp.com/available?date=${formattedDate}`)
             .then(res => res.json())
     )
     if (isLoading) {
