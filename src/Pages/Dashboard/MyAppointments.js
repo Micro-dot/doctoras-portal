@@ -17,7 +17,6 @@ const MyAppointments = () => {
                 }
             })
                 .then(res => {
-                    console.log('res', res);
                     if (res.status === 401 || res.status === 403) {
                         signOut(auth);
                         localStorage.removeItem('accessToken');
@@ -49,7 +48,7 @@ const MyAppointments = () => {
                     <tbody>
                         {
                             appointments.map((a, i) =>
-                                <tr>
+                                <tr key={a._id}>
                                     <th>{i + 1}</th>
                                     <td>{a.patientName}</td>
                                     <td>{a.treatment}</td>
@@ -62,7 +61,9 @@ const MyAppointments = () => {
                                             </Link>
                                         }
                                         {(a.price && a.paid) &&
-                                            <span className='text-success'>Paid</span>
+                                            <div>
+                                                <p className='text-success'>Paid</p>
+                                            </div>
                                         }
                                     </td>
                                 </tr>)

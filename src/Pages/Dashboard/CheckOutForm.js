@@ -6,11 +6,12 @@ const CheckOutForm = ({ appointment }) => {
     const elements = useElements();
     const [cardError, setCardError] = useState('');
     const [success, setSuccess] = useState('');
+    const [processing, setProcessing] = useState(false);
     const [clientSecret, setClientSecret] = useState("");
     const [transactionId, setTransactionId] = useState("");
-    const { price, patient, patientName } = appointment
+    const { _id, price, patient, patientName } = appointment
     useEffect(() => {
-        fetch('http://localhost:5000/create-payment-intent', {
+        fetch('https://polar-anchorage-20509.herokuapp.com/create-payment-intent', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -41,6 +42,7 @@ const CheckOutForm = ({ appointment }) => {
 
         setCardError(error?.message || '')
         setSuccess('');
+        setProcessing(true);
 
         //confirm Card payment 
         const { paymentIntent, error: intentError } = await stripe.confirmCardPayment(
@@ -57,13 +59,32 @@ const CheckOutForm = ({ appointment }) => {
         );
         if (intentError) {
             setCardError(intentError?.message);
+            setProcessing(false);
 
         }
         else {
             setCardError('');
             setTransactionId(paymentIntent.id)
-            console.log(paymentIntent)
             setSuccess('Congratulation your payment is Completed')
+
+            //Store Payment on database
+            const payment = {
+                appointment: _id,
+                transactionId: paymentIntent.id
+            }
+            fetch(`https://polar-anchorage-20509.herokuapp.com/booking/${_id}`, {
+                method: 'PATCH',
+                headers: {
+                    'content-type': 'application/json',
+                    'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: JSON.stringify(payment)
+            }).then(res => res.json())
+                .then(data => {
+                    setProcessing(false)
+                    console.log(data);
+                })
+
         }
 
     }
@@ -96,9 +117,9 @@ const CheckOutForm = ({ appointment }) => {
             }
             {
                 success && <div className='text-green-500'>
-                        <p>{success}</p>
-                        <p>Your Transaction Id: <span className='text-orange-500 font-bold'>{transactionId}</span> </p>
-                     </div>
+                    <p>{success}</p>
+                    <p>Your Transaction Id: <span className='text-orange-500 font-bold'>{transactionId}</span> </p>
+                </div>
             }
         </>
     );
